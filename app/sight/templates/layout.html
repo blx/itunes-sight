@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+<head>
+    <title>Sight :: iTunes Analytics</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"/>
+<!--    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>-->
+    <script>window.jQuery || document.write('<script src="{{ url_for("static", filename="js/jquerylocal.js") }}">\x3C/script>');</script>
+    <script src="{{ url_for('static', filename='js/underscore-min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/d3.v3.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/sorttable.js') }}"></script>
+    
+    <script>
+    
+    window.sightdata = {
+        'playcountbyalbumyear' : {{ se.getPlayCountsByAlbumYear()|tojson|safe }}
+    };
+    
+    </script>
+    
+    <script>
+    {% raw %}
+    
+    (function(sight) {
+        
+        var drawPlayCountByAlbumYear = function(parentdiv) {
+            var data = window.sightdata['playcountbyalbumyear'];
+            
+            var margin = {top: 20, right: 20, bottom: 30, left: 40},
+                width = 980 - margin.left - margin.right,
+                height = 300 - margin.top - margin.bottom;
+        
+            var x = d3.scale.linear()
+                .domain(d3.extent(data, function(d) { return d.year; }))
+                .range([0, width]);
+            
+            var y = d3.scale.linear()
+                .domain(d3.extent(data, function(d) { return d.playCount; }))
+                .range([height, 0]);
+            
+            var xAxis = d3.svg.axis()
+                .scale(x)
+                .tickFormat(d3.format("^4f"))
+                .orient("bottom");
+            
+            var yAxis = d3.svg.axis()
+                .scale(y)
+                .orient("left");
+            
+            var line = d3.svg.line()
+                .x(function(d) { return x(d.year); })
+                .y(function(d) { return y(d.playCount); });
+            
+            var svg = d3.select(parentdiv).append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+              .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis);
+            
+            svg.append("g")
+                .attr("class", "y axis")
+                .call(yAxis)
+              .append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 6)
+                .attr("dy", ".71em")
+                .style("text-anchor", "end")
+                .text("Play Count");
+            
+            svg.append("path")
+                .datum(data)
+                .attr("class", "line")
+                .attr("d", line);
+        
+        };
+        
+        sight.init = function() {
+            drawPlayCountByAlbumYear('#chart_playcountbyalbumyear');
+        };
+        
+    })(window.sight = window.sight || {});
+    
+    
+    $(sight.init);
+    
+    {% endraw %}
+    </script>
+</head>
+<body>
+    <header>
+        <div class="container">
+             <h1><a href="/">Sight</a></h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="jumbo">
+            <p>Catalog File: {{ se.v['Catalog File'] }} (Size: {{ se.v['Catalog File Size'] }})</p>
+            <p>Music Folder: {{ se.v['Music Folder'] }}</p>
+            
+            <div id="chart_playcountbyalbumyear"></div>
+            
+            <h3>Albums</h3>
+            
+            <pre>album play count = sum(track play counts) / sqrt(num tracks)</pre>
+            
+            <table class="sortable">
+                <tr>
+                    <th>Album Play Count</th>
+                    <th>Normalised</th>
+                    <th class="sortascfirst">Album</th>
+                    <th class="sortascfirst">Album Artist || Artist</th>
+                    <th>Tracks</th>
+                    <th>Year</th>
+                    <th>Total Time Spent Listening</th>
+                </tr>
+                $ for album in se.getMostPlayedAlbums()
+                    <tr id="pid-{{ album['Tracks'][0]['Persistent ID'] }}">
+                        <td>{{ album['Album Play Count']|round(1) }}</td>
+                        <td>{{ album['Album Play Count Normalised']|round(1) }}</td>
+                        <td class="td-album">
+                        $ if loop.index0 < 10:
+                            <img src="/persistentid/{{ album['Tracks'][0]['Persistent ID'] }}/artwork" />
+                        $ endif
+                            {{ album['Album'] }}
+                        </td>
+                        <td>{{ album['Artist'] }}</td>
+                        <td>{{ album['Tracks']|length }}
+                        <td>{{ album['Year'] }}</td>
+                        <td>{{ album['Seconds Spent Listening']|secondstohms }}</td>
+                    </tr>
+                $ endfor
+            </table>
+        </div>
+    </div>
+    
+    <script>{% raw %}
+    
+    $(".td-album").click(function(evt) {
+        window.open("/persistentid/"+ $(this).parent().attr('id').replace('pid-', '') + "/artwork");
+    });
+    
+    </script>{% endraw %}
+    
+</body>
+</html>

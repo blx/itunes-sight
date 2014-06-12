@@ -1,0 +1,29 @@
+Notes
+
+iTunes
+  /Album Artwork
+    /Download
+      /0F6358F2DD5C51B0           catalog pid
+        /15
+          /02
+            /13
+              /0F6358F2DD5C51B0-4320D0CE99648D2F-edit.jpg
+              
+               ^ catalog pid ^  ^ unknown   ^ last three chars are reversed hex representation
+                                              of the dir structure (ie. 15/02/13 => F2D => D2F)
+
+
+Format:
+
+    JPEG if FF D8 FF appears around offset 1EC before the JFIF...AppleMark text
+      => strip the bytes before FF D8 FF and save as .JPEG
+    
+
+
+Test Examples:
+
+  /Album Artwork/Download/0F6358F2DD5C51B0
+    /15/02/13
+      /0F6358F2DD5C51B0-4320D0CE99648D2F-edit.jpg
+      is for:  Kylie Minogue - Rhythm of Love (album)
+      

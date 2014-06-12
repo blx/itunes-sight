@@ -1,0 +1,104 @@
+body {
+    margin: 0;
+    margin-bottom: 10px;
+    padding: 0;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    color: #444;
+}
+
+header {
+    background-color: rgb(123,75,60);
+    width: 100%;
+    margin-bottom: 10px;
+}
+header a {
+    text-decoration: none;
+    color: inherit;
+}
+
+header h1 {
+    margin: 0;
+	padding: 7px 0;
+    font-size: 1.7em;
+    color: #fff;
+	opacity: 0.95;
+    text-transform: uppercase;
+}
+
+.container {
+    width: 1040px;
+    margin: 0 auto;
+}
+
+.footer {
+    text-align: right;
+    font-size: 10px;
+}
+
+
+div.jumbo {
+    padding: 15px 12px;
+    background-color: #eee;
+    border-radius: 5px;
+}
+
+
+
+#toplinks {
+    display: inline-block;
+    float: right;
+}
+#toplinks ul {
+    margin: 0;
+    margin-right: 10px;
+    list-style-type: none;
+}
+#toplinks li {
+    display: inline;
+    padding-left: 10px;
+}
+
+
+
+
+.alignr {
+    float: right;
+}
+
+/*
+.sort_downarrow:not(.sorttable_sorted):not(.sorttable_sorted_reverse):after {
+	content: " \25BE";
+}
+.sort_uparrow:not(.sorttable_sorted):not(.sorttable_sorted_reverse):after {
+	content: " \25B4";
+}
+*/
+
+
+
+.td-album img {
+    width: 40px;
+    float: left;
+    padding-right: 8px;
+}
+
+svg {
+    font: 10px sans-serif;
+    
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+    }
+    
+    .x.axis path {
+        display: none;
+    }
+    
+    .line {
+        fill: none;
+        stroke: steelBlue;
+        stroke-width: 1.5px;
+    }
+}
