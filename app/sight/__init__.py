@@ -13,5 +13,5 @@ class Flask(Flask_orig):
 app = Flask(__name__)
 
 
-# Do this last to minimize circular importation side-effects.
+# Do this now that we've created the app object
 import sight.routes
