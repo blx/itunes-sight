@@ -59,6 +59,9 @@ div.jumbo {
 	content: " \25B4";
 }
 */
+.sortable td {
+  vertical-align: top; }
+
 .td-album img {
   width: 40px;
   float: left;

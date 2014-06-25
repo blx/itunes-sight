@@ -84,7 +84,7 @@ class SightEngine:
         self.v = {
             'Catalog File' : infile,
             'Catalog File Size' : os.path.getsize(infile),
-            'Music Folder' : self.pl.get('Music Folder')
+            'Music Folder' : urllib2.unquote(self.pl.get('Music Folder'))
         }
         self.tracks = [Track(t) for t in self.pl['Tracks'].itervalues()]
 
@@ -122,8 +122,9 @@ class SightEngine:
             albums = list(g)
             year = albums[0].get('Year')
             playcounts = sum(tr['Play Count'] for alb in albums for tr in alb['Tracks'])
+            albumslist = [{k: a[k] for k in ['Album', 'Artist']} for a in albums]
             
-            playcountsbyyear.append({'year': year, 'playCount': playcounts})
+            playcountsbyyear.append({'year': year, 'playCount': playcounts, 'albums': albumslist})
             years.append(k)
         
         return playcountsbyyear    # list of {year: int, playCount: int}
