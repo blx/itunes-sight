@@ -2,6 +2,7 @@
 
 from __future__ import division
 from itertools import groupby
+from operator import itemgetter
 import os.path
 import plistlib as pll
 import urllib2
@@ -28,12 +29,20 @@ class Track(dict):
 
 
 class Album(dict):
-    
     def __init__(self, *args, **kw):
         super(Album, self).__init__(*args, **kw)
         
-        if not set(['Tracks', 'Artist', 'Album']).issubset(self.keys()):
+        if not frozenset(['Tracks', 'Artist', 'Album']).issubset(self.keys()):
             raise ValueError("Album must have at least Tracks[], Artist, Album fields.")
+
+
+class Artist(dict):
+    def __init__(self, *args, **kw):
+        super(Artist, self).__init__(*args, **kw)
+        
+        if not frozenset(['Artist']).issubset(self.keys()):
+            raise ValueError("Artist must have at least Artist field.")
+
         
 
 
@@ -108,6 +117,27 @@ class SightEngine:
         return sorted(self.albums, key=lambda a: (-a.get('Album Play Count'),
                                                    a['Artist'],
                                                    a['Album']))[:n]
+    
+    def getArtists(self):
+        # group by artist
+        
+        keyfunc = itemgetter('Artist')
+        
+        _artists = [t for t in sorted(self.tracks, key=keyfunc) if not t.get('Has Video')]
+        
+        artists = []
+        
+        for k, g in groupby(_artists, keyfunc):
+            albums = [list(g2) for k2, g2 in groupby(g, itemgetter('Album'))]
+            
+            artists.append({
+                'Artist': k,
+                'Albums': albums
+            })
+        
+        
+        return artists
+        
     
     
     def getPlayCountsByAlbumYear(self):

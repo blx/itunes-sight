@@ -216,6 +216,20 @@
             
             <div id="chart_playcountbyalbumyear"></div>
             
+            <h3>Artists</h3>
+            
+            <table class="sortable">
+                <tr>
+                    <th>Artist</th>
+                </tr>
+                $ for artist in se.getArtists()
+                    <tr>
+                        <td>{{ artist['Artist'] }}</td>
+                    </tr>
+                $ endfor
+            </table>
+            
+            
             <h3>Albums</h3>
             
             <table class="sortable">
@@ -245,6 +259,18 @@
                     </tr>
                 $ endfor
             </table>
+            
+            <div id="itunestable">
+                $ for album in se.getMostPlayedAlbums(50)
+                <div class="albumtile">
+                    <p class="albumtimeoverlay">{{ album['Seconds Spent Listening']|secondstohms }}</p>
+                    <img src="/persistentid/{{ album['Tracks'][0]['Persistent ID'] }}/artwork"/>
+                    <p class="albumname">{{ album['Album'] }}</p>
+                    <p class="artistname">{{ album['Artist'] }}</p>
+                </div>
+                $ endfor
+            </div>
+            
         </div>
     </div>
     
@@ -252,6 +278,14 @@
     
     $(".td-album").click(function(evt) {
         window.open("/persistentid/"+ $(this).parent().attr('id').replace('pid-', '') + "/artwork");
+    });
+    
+    $(".albumtile").hover(function() {
+        $(this).find("img").fadeTo(100, 1);
+        $(this).find(".albumtimeoverlay").fadeTo(100, 0);
+    }, function() {
+        $(this).find("img").fadeTo(250, 0.5);
+        $(this).find(".albumtimeoverlay").fadeTo(250, 1);
     });
     
     </script>{% endraw %}
