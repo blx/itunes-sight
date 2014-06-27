@@ -216,6 +216,7 @@
             
             <div id="chart_playcountbyalbumyear"></div>
             
+            {#
             <h3>Artists</h3>
             
             <table class="sortable">
@@ -228,7 +229,7 @@
                     </tr>
                 $ endfor
             </table>
-            
+            #}
             
             <h3>Albums</h3>
             
@@ -261,10 +262,11 @@
             </table>
             
             <div id="itunestable">
-                $ for album in se.getMostPlayedAlbums(50)
+                $ for album in se.getLongestPlayedAlbums(80)
                 <div class="albumtile">
                     <p class="albumtimeoverlay">{{ album['Seconds Spent Listening']|secondstohms }}</p>
-                    <img src="/persistentid/{{ album['Tracks'][0]['Persistent ID'] }}/artwork"/>
+                    <img src="/persistentid/{{ album['ArtworkPersistentID'] }}/artwork"/>
+{#                    <img src="/persistentid/{{ album['Tracks'][0]['Persistent ID'] }}/artwork"/>#}
                     <p class="albumname">{{ album['Album'] }}</p>
                     <p class="artistname">{{ album['Artist'] }}</p>
                 </div>

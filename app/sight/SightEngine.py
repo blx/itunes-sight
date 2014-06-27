@@ -118,6 +118,23 @@ class SightEngine:
                                                    a['Artist'],
                                                    a['Album']))[:n]
     
+    def getLongestPlayedAlbums(self, n=None):
+        ret = sorted(self.albums, key=lambda a: (-a.get('Seconds Spent Listening'),
+                                                  a['Artist'],
+                                                  a['Album']))[:n]
+        for alb in ret:
+            for track in alb['Tracks']:
+                artwork = self.getArtwork(track['Persistent ID'])
+                if artwork:
+                    alb['ArtworkPersistentID'] = track['Persistent ID']
+                    break
+                print "Couldn't get artwork for {t[Name]} in {t[Album]} by {t[Artist]}".format(t=track)
+            else:
+                alb['ArtworkRaw'] = None
+        
+        return ret
+    
+    
     def getArtists(self):
         # group by artist
         
@@ -169,6 +186,9 @@ class SightEngine:
         if 'mp4a' in typeguess:
             file = mutagen.mp4.MP4(path)
             artwork = file.tags.get('covr')
+            if not artwork:
+                print file.tags
+                print track
             return artwork[0] if artwork else None
         
         elif 'audio/mpeg' in typeguess:
