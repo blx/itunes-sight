@@ -110,12 +110,13 @@ div.jumbo {
 
 .albumtile .albumtimeoverlay {
     position: absolute;
-    left: 19%;
+    width: 100%;
     top: 31%;
     z-index: 1001;
     color: #fff;
     text-shadow: 0px 1px 9px #111;
     font-size: 30px;
+    text-align: center;
     font-weight: bold;
     cursor: default;
 }
