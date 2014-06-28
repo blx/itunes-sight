@@ -82,10 +82,12 @@ div.jumbo {
   box-shadow: 1px 1px 6px #555; }
 
 .albumtile .albumname {
-  font-weight: bold; }
+  font-weight: bold;
+  color: #000; }
 
 .albumtile p {
-  margin: 3px 0 0 0; }
+  margin: 3px 0 0 0;
+  color: #555; }
 
 .albumtile .albumtimeoverlay {
   position: absolute;

@@ -262,7 +262,7 @@
             </table>
             
             <div id="itunestable">
-                $ for album in se.getLongestPlayedAlbums(80)
+                $ for album in se.getLongestPlayedAlbums(100)
                 <div class="albumtile">
                     <p class="albumtimeoverlay">{{ album['Seconds Spent Listening']|secondstohms }}</p>
                     <img src="/persistentid/{{ album['ArtworkPersistentID'] }}/artwork"/>
