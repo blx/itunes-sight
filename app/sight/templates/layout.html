@@ -108,7 +108,8 @@
                 .attr("width", 200)
                 .attr("height", 300)
                 .attr("id", function(d) { return "labelyear-" + d.year; })
-                .style("display", "none");
+                .style("display", "none")
+                .style("pointer-events", "none");
                 
             var htmlDOMs = foreignObjects.append("xhtml:body")
                 .style("margin", 0)
