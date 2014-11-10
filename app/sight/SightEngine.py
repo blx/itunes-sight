@@ -128,7 +128,7 @@ class SightEngine:
                 if artwork:
                     alb['ArtworkPersistentID'] = track['Persistent ID']
                     break
-                print "Couldn't get artwork for {t[Name]} in {t[Album]} by {t[Artist]}".format(t=track)
+#                print "Couldn't get artwork for {t[Name]} in {t[Album]} by {t[Artist]}".format(t=track)
             else:
                 alb['ArtworkRaw'] = None
         
@@ -183,24 +183,27 @@ class SightEngine:
         
         typeguess = mimetypes.guess_type(path)[0]
         
-        if 'mp4a' in typeguess:
-            file = mutagen.mp4.MP4(path)
-            artwork = file.tags.get('covr')
-            if not artwork:
-                print file.tags
-                print track
-            return artwork[0] if artwork else None
+        try:
+            if 'mp4a' in typeguess:
+                file = mutagen.mp4.MP4(path)
+                artwork = file.tags.get('covr')
+                if not artwork:
+                    print file.tags
+                    print track
+                return artwork[0] if artwork else None
         
-        elif 'audio/mpeg' in typeguess:
-            file = mutagen.id3.ID3(path)
-            try:
-                artwork = file.getall('APIC')[0].data
-            except IndexError:
-                return None
+            elif 'audio/mpeg' in typeguess:
+                file = mutagen.id3.ID3(path)
+                try:
+                    artwork = file.getall('APIC')[0].data
+                except IndexError:
+                    return None
             
-            return artwork
+                return artwork
         
-        return None
+            return None
+        except:
+            return None
 
 
 
