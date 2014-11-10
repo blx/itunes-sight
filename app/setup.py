@@ -3,9 +3,8 @@ from setuptools import setup
 setup(
     name='Sight',
     version='1.0',
-    long_description=__doc__,
+    author='Ben Cook'
+    description="iTunes analytics",
     packages=['sight'],
-    include_package_data=True,
-    zip_safe=False,
     install_requires=['Flask']
 )
