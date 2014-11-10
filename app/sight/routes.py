@@ -7,10 +7,15 @@ from flask import render_template, request, send_file
 
 from sight import app, SightEngine
 
-sys.stdout.write('Processing catalog file... ')
-sys.stdout.flush()
-se = SightEngine.run()
-sys.stdout.write("[OK]\n")
+
+if not hasattr(app, 'se_instance'):
+    sys.stdout.write('Processing catalog file... ')
+    sys.stdout.flush()
+    app.se_instance = SightEngine.SightEngine(app.config["lib_location"])
+    sys.stdout.write("[OK]\n")
+else:
+    print('loaded SE from app')
+se = app.se_instance
 
 
 @app.template_filter('secondstohms')

@@ -11,6 +11,7 @@ class Flask(Flask_orig):
     })
 
 app = Flask(__name__)
+app.config["lib_location"] = "/Users/bc/Music/iTunes/iTunes Music Library.xml"
 
 
 # Do this now that we've created the app object

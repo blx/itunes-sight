@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 from __future__ import division
 from itertools import groupby
 from operator import itemgetter
@@ -42,8 +40,6 @@ class Artist(dict):
         
         if not frozenset(['Artist']).issubset(self.keys()):
             raise ValueError("Artist must have at least Artist field.")
-
-        
 
 
 def sortTracksByPlays(tracks):
@@ -179,7 +175,7 @@ class SightEngine:
     
     def getArtwork(self, persistentid):
         track = self.getTrackByPID(persistentid)
-        path = urllib2.unquote(track.get('Location')).decode('utf8').replace('file://localhost', '')
+        path = urllib2.unquote(track.get('Location')).decode('utf8').replace('file://', '')
         
         typeguess = mimetypes.guess_type(path)[0]
         
@@ -204,15 +200,3 @@ class SightEngine:
             return None
         except:
             return None
-
-
-
-
-def run():
-    return SightEngine("/Users/bc/Music/iTunes/iTunes Music Library.xml")    
-
-
-if __name__ == "__main__":
-    se = run()
-    se.printMostPlayed(25)
-    
