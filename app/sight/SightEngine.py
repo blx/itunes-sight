@@ -183,9 +183,9 @@ class SightEngine:
             if 'mp4a' in typeguess:
                 file = mutagen.mp4.MP4(path)
                 artwork = file.tags.get('covr')
-                if not artwork:
-                    print file.tags
-                    print track
+#                if not artwork:
+#                    print file.tags
+#                    print track
                 return artwork[0] if artwork else None
         
             elif 'audio/mpeg' in typeguess:
