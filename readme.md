@@ -17,3 +17,8 @@ If you change the Sass, recompile to CSS:
 $ cd app
 $ sass --watch sight/assets:sight/static/css
 ```
+
+## Screenshots
+
+![Main view](/../images/screenshots/sight-main.png?raw=true)
+![Album tiles](/../images/screenshots/sight-albumtiles.png?raw=true)
