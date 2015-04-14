@@ -13,7 +13,7 @@
 
     <div class="container">
         <div class="jumbo">
-            <p>Catalog File: {{ se.v['Catalog File'] }} (Size: {{ se.v['Catalog File Size'] }})</p>
+            <p>Catalog File: {{ se.v['Catalog File'] }} (Size: {{ '%04d' % (se.v['Catalog File Size'] / 1024) }} KiB)</p>
             <p>Music Folder: {{ se.v['Music Folder'] }}</p>
             
             <div id="chart_albumsbyyear"></div>

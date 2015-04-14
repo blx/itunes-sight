@@ -11,3 +11,9 @@ Checkout sight, open a new virtualenv and run:
 (env)$ cd app
 (env)$ python runserver.py
 ```
+
+If you change the Sass, recompile to CSS:
+```
+$ cd app
+$ sass --watch sight/assets:sight/static/css
+```
