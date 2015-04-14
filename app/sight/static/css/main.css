@@ -89,7 +89,7 @@ div.jumbo {
   margin: 3px 0 0 0;
   color: #555; }
 
-.albumtile .albumtimeoverlay {
+.albumtile .timeoverlay {
   position: absolute;
   width: 100%;
   top: 31%;
@@ -114,3 +114,5 @@ svg {
     fill: none;
     stroke: steelBlue;
     stroke-width: 1.5px; }
+
+/*# sourceMappingURL=main.css.map */
